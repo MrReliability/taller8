@@ -19,8 +19,6 @@ prepare_venv: &prepare_venv
 jobs:
   deploy_app_to_railway:
     <<: *defaults
-    environment:
-      RAILWAY_TOKEN: 6b7c1a1b-907c-4c19-ac6b-0134d1f277b7   # Se lee del entorno de CircleCI
     steps:
       - checkout:
           path: ~/project/
