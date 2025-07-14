@@ -1,5 +1,4 @@
 version: '2.1'
-
 orbs:
   node: circleci/node@5.1.0
 
@@ -19,8 +18,6 @@ prepare_venv: &prepare_venv
 jobs:
   deploy_app_to_railway:
     <<: *defaults
-    environment:
-      RAILWAY_TOKEN: $RAILWAY_TOKEN   # Asegúrate de tener esta variable en CircleCI
     steps:
       - checkout:
           path: ~/project/
@@ -31,11 +28,19 @@ jobs:
       - run:
           name: Deploy to Railway App
           command: |
-            cd bankchurn-api
-            railway up --service=4d828d54-9a9e-407f-a0f9-9afba7a12f44 --detach
+            cd bankchurn-api 
+            railway up --service=NombreDelServicio
+            railway up --detach
+
+tags_only: &tags_only
+  filters:
+    branches:
+      ignore: /.*/
+    tags:
+      only: /^.*/
 
 workflows:
-  version: 2
+  version: 1
   deploy_pipeline:
     jobs:
       - deploy_app_to_railway:
